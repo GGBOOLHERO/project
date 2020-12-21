@@ -1,0 +1,54 @@
+
+{% extends 'base.html' %}
+{% block main %}
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">下属考勤管理</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>假条编号</th>
+                            <th>请假人</th>
+                            <th>假条状态</th>
+                            <th>请假类型</th>
+                            <th>请假原因</th>
+                            <th>起始时间</th>
+                            <th>结束时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for att_obj in att_list %}
+                            <tr>
+                                <td class="col-lg-1">{{ loop.index }}</td>
+                                <td class="col-lg-1">{{ att_obj.person.name }}</td>
+                                <td class="col-lg-1">{{ att_obj.astauts }}</td>
+                                <td class="col-lg-1">{{ att_obj.atype }}</td>
+                                <td class="col-lg-2">{{ att_obj.reason }}</td>
+                                <td class="col-lg-2">{{ att_obj.start_time }}</td>
+                                <td class="col-lg-2">{{ att_obj.end_time }}</td>
+                                <td class="col-lg-2">
+                                    <a href="/update_att_sub/?id={{ att_obj.id }}&status=通过"
+                                       class="btn btn-default">通过</a>
+                                    <a href="/update_att_sub/?id={{ att_obj.id }}&status=驳回"
+                                       class="btn btn-default">驳回</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+    </div>
+{% endblock %}

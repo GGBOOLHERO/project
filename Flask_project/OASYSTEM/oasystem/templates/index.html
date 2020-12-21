@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block main %}
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">首页</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div id="show"></div>
+                <div class="col-lg-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            公司新闻
+                            <a class="pull-right" href="/news/">查看更多...</a>
+                        </div>
+                        <div class="panel-body">
+                            {% for new in news_list[:5] %}
+                            <div>{{new.title}}</div>
+
+                            {% endfor %}
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            考勤情况
+                            <a class="pull-right" href="attendance_me.html">查看更多...</a>
+                        </div>
+                        <div class="panel-body">
+                             {% for attendance in attendance_list[:5] %}
+
+                                <div>{{attendance.person.name}}
+                                    {{attendance.reason}}
+
+                                </div>
+                            {% endfor %}
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</div>
+{% endblock %}
