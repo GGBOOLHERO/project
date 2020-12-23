@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/buyer/js/jquery.min.js"></script>
+    <script src="/static/buyer/js/vue.min.js"></script>
+</head>
+<body>
+<h1>我是vue</h1>
+{#告诉django不要解析里面的变量#}
+{% verbatim %}
+<div id="app">
+    {{ msg }} <br/>{{ url }}
+    <a v-bind:href="url">点击我访问百度</a> <br/>
+    <p>
+        我是正常的p
+    </p>
+    <p v-if="flag">
+        我是不正常的p
+    </p>
+    <ul>
+        <li v-for="game in gameList">{{ game }}</li>
+    </ul>
+    <button v-on:click="onLoad">绑定事件</button>
+</div>
+{% endverbatim %}
+
+<script>
+    $(function () {
+        //alert('xxx');
+        new Vue({
+            // element  元素, 绑定页面范围，出了范围则不能使用vue语法。通过id选择器进行绑定
+            el: "#app",
+            data: { // 保存数据
+                msg: 'hello vue',
+                url: 'https://www.baidu.com',
+                flag: true,
+                gameList: ['LOL', 'CF', 'DNF']
+            },
+            methods: {
+                onLoad: function () {
+                    alert('我是坦克...');
+                }
+            },
+            created: function () {
+                alert('我是created...');
+            }
+        });
+    })
+</script>
+</body>
+</html>

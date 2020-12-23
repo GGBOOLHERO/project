@@ -1,0 +1,86 @@
+{% extends "buyer/register_email.html" %}
+{% load static %}
+{% block content %}
+    <div class="users_box">
+        <div class="users_box_top">会员邮箱注册</div>
+        <div class="users_box_bottom">
+            <div class="box_bottom_left"><img src="{% static 'buyer/images/huiyuan.jpg' %}"/></div>
+            <div class="box_bottom_right" style="float:left;margin-left:20px">
+
+                <form method="post" action="/buyer/register_email/">
+                    {% csrf_token %}
+                    <div>
+                        邮&nbsp;箱：<input type="text" name="emailname" placeholder="请输入邮箱" required="" id="email"
+                                        class="input"/> <br/>
+                        <span id="email_error">{{ dic.email_name_error }}</span>
+                    </div>
+
+                    <div>
+                        验证码：<input type="text" name="code" placeholder="请输入验证码" required="" style='width: 150px'
+                                   class="input" id="code"/>
+
+                        <input class="huoqu" id="zphone1" type="button" value=" 获取验证码 ">
+                        {#                        <button id="zphone1">获取验证码</button>#}
+                        <span>{{ dic.code_error }}{{ dic.code_time_out }}</span>
+                    </div>
+
+                    <div>
+                        密&nbsp;码：<input type="password" name="userpass" placeholder="" required="" class="input"/>
+                    </div>
+
+                    <div>
+                        <input type="submit" id="submit" style="align:center" value="注册会员" class="gouwu"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            // 1. 创建点击事件
+            $("#zphone1").click(function () {
+                // 2. 获取输入的邮箱
+                var email = $("#email").val();
+                //alert(email);
+                // 3. 发送ajax 请求
+                $.ajax({
+                    url: '/buyer/get_yzm_ajax/',
+                    type: 'GET',
+                    data: {'email': email},
+                    success: function (result) {
+                        alert('发送验证码成功，请查看邮箱,2分钟之内有效!!!');
+                        console.log(result);
+                        if (result.status == 'error') {
+                            $("#email_error").text(result.data);
+                        } else {
+                            $("#email_error").text(result.data);
+
+                            // 倒计时操作
+                            $("#zphone1").attr('disabled', 'disabled');// 添加不可点击属性
+                            //var countDown = document.getElementById("zphone1");
+                            var time = 120;
+                            var timer = setInterval(function () {
+                                time--;
+                                //countDown.innerHTML = time;
+                                $("#zphone1").val(time + 's');
+                                if (time == 0) {
+                                    clearInterval(timer); // 清空定时器
+                                    $("#zphone1").val('获取验证码'); // 设置名称
+                                    $("#zphone1").removeAttr('disabled');// 删除不可点击属性
+                                }
+                            }, 1000);
+
+                        }
+                    },
+                    error: function (result) {
+                        alert('error了');
+                    }
+                })
+
+
+            })
+
+
+        })
+    </script>
+{% endblock %}
